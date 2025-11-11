@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123279893933",
+    "project_id": "mobil-haul-project",
+    "storage_bucket": "mobil-haul-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123279893933:android:4ed6336b21f8b3d01a6d24",
+        "android_client_info": {
+          "package_name": "com.michael.ebeano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRApNd_Mxj-E0WorvIjXBFW-9O3Q8RQ3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
