@@ -9,22 +9,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.michael.ebeano.models.ProductItem;
+import com.michael.ebeano.services.ProductService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProductActivity extends AppCompatActivity implements ProductAdapter.Listener {
     RecyclerView list;
     ProgressBar progress;
     ProductAdapter adapter;
-    FirebaseFirestore db;
-    CollectionReference productsRef;
+    ProductService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,50 +30,23 @@ public class ProductActivity extends AppCompatActivity implements ProductAdapter
         list.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ProductAdapter(new ArrayList<>(), this);
         list.setAdapter(adapter);
-        db = FirebaseFirestore.getInstance();
-        productsRef = db.collection("products");
+        service = new ProductService();
         load();
     }
 
     void load() {
         progress.setVisibility(View.VISIBLE);
-        productsRef.get().addOnSuccessListener(snap -> {
-            List<ProductItem> items = new ArrayList<>();
-            for (QueryDocumentSnapshot d : snap) {
-                ProductItem p = d.toObject(ProductItem.class);
-                p.id = d.getId();
-                items.add(p);
-            }
-            if (items.isEmpty()) seed(); else {
+        service.list(items -> {
+            if (items.isEmpty()) {
+                service.seedDefault(created -> {
+                    adapter.setData(created);
+                    progress.setVisibility(View.GONE);
+                });
+            } else {
                 adapter.setData(items);
                 progress.setVisibility(View.GONE);
             }
         });
-    }
-
-    void seed() {
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (int i = 1; i <= 8; i++) {
-            Map<String, Object> m = new HashMap<>();
-            m.put("name", "Item " + i);
-            m.put("shortDescription", "Short desc " + i);
-            m.put("longDescription", "Long description of item " + i);
-            m.put("price", 9.99 + i);
-            m.put("imageUrl", "https://picsum.photos/seed/" + i + "/400/400");
-            list.add(m);
-        }
-        List<ProductItem> items = new ArrayList<>();
-        for (Map<String, Object> m : list) {
-            productsRef.add(m).addOnSuccessListener(ref -> ref.get().addOnSuccessListener(d -> {
-                ProductItem p = d.toObject(ProductItem.class);
-                p.id = d.getId();
-                items.add(p);
-                if (items.size() == 8) {
-                    adapter.setData(items);
-                    progress.setVisibility(View.GONE);
-                }
-            }));
-        }
     }
 
     @Override

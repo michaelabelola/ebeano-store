@@ -7,7 +7,7 @@ import java.util.UUID;
  * Record representing USERS table.
  */
 public record User(
-        UUID id,
+        String id,
         String email,
         String passwordHash,
         String firstName,

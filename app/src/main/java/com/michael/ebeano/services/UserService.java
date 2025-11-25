@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 
 public interface UserService {
 
-    Optional<User> getById(UUID id);
+    Optional<User> getById(String id);
 
     List<User> listAll();
 
-    void delete(UUID id);
+    void delete(String id);
 
     List<User> findByField(String fieldName, Object value);
 
@@ -26,7 +26,7 @@ public interface UserService {
 
     User register(String email, String passwordHash, String firstName, String lastName, String phone);
 
-    Optional<User> verifyEmail(UUID userId);
+    Optional<User> verifyEmail(String userId);
 
-    Optional<User> updateNames(UUID userId, String firstName, String lastName);
+    Optional<User> updateNames(String userId, String firstName, String lastName);
 }

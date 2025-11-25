@@ -13,16 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.michael.ebeano.models.CartLine;
+import com.michael.ebeano.models.OrderDoc;
+import com.michael.ebeano.models.OrderItem;
+import com.michael.ebeano.services.OrderService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class CheckoutActivity extends AppCompatActivity {
     EditText firstName;
@@ -79,33 +78,28 @@ public class CheckoutActivity extends AppCompatActivity {
         double subtotal = CartManager.get().subtotal();
         double tax = CartManager.get().tax();
         double total = CartManager.get().total();
-        List<Map<String,Object>> items = new ArrayList<>();
+        List<OrderItem> items = new ArrayList<>();
         for (CartLine l : lines) {
-            Map<String,Object> m = new HashMap<>();
-            m.put("productId", l.item.id);
-            m.put("name", l.item.name);
-            m.put("price", l.item.price);
-            m.put("qty", l.qty);
-            items.add(m);
+            items.add(new OrderItem(l.item.id, l.item.name, l.item.price, l.qty, l.item.imageUrl));
         }
-        Map<String,Object> order = new HashMap<>();
-        order.put("userId", FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : "");
-        order.put("firstName", fn);
-        order.put("lastName", ln);
-        order.put("address", ad);
-        order.put("email", em);
-        order.put("phone", ph);
-        order.put("paymentMethod", pm);
-        order.put("subtotal", subtotal);
-        order.put("tax", tax);
-        order.put("total", total);
-        order.put("items", items);
-        order.put("createdAt", FieldValue.serverTimestamp());
-        FirebaseFirestore.getInstance().collection("orders").add(order).addOnSuccessListener(r -> {
+        OrderDoc order = new OrderDoc();
+        order.userId = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : "";
+        order.firstName = fn;
+        order.lastName = ln;
+        order.address = ad;
+        order.email = em;
+        order.phone = ph;
+        order.paymentMethod = pm;
+        order.subtotal = subtotal;
+        order.tax = tax;
+        order.total = total;
+        order.items = items;
+        order.createdAt = Timestamp.now();
+        new OrderService().create(order, id -> {
             CartManager.get().clear();
             startActivity(new android.content.Intent(this, ThankYouActivity.class));
             finish();
-        }).addOnFailureListener(e -> Toast.makeText(this, "Order failed", Toast.LENGTH_SHORT).show());
+        });
     }
 
     boolean luhn(String s) {
