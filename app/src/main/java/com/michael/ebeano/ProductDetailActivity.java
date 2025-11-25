@@ -49,7 +49,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         add.setOnClickListener(v -> CartManager.get().add(item, parseQty()));
         goCart.setOnClickListener(v -> {
             CartManager.get().add(item, parseQty());
-            startActivity(new Intent(this, CartActivity.class));
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("open_cart", true);
+            startActivity(intent);
         });
     }
 

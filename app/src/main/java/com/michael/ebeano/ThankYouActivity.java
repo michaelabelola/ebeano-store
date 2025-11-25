@@ -13,7 +13,7 @@ public class ThankYouActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thank_you);
         Button back = findViewById(R.id.btnBackToProducts);
         back.setOnClickListener(v -> {
-            startActivity(new Intent(this, ProductActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         });
     }

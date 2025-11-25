@@ -20,13 +20,7 @@
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
-            android:exported="false" />
-        <activity
             android:name=".ProductDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProductActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

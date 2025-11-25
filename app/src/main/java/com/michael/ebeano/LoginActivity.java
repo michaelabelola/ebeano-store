@@ -64,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void goToProducts() {
-        startActivity(new Intent(this, ProductActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         finish();
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CartManager {
-    static CartManager i;
+    static CartManager manager;
     Map<String, CartLine> lines = new LinkedHashMap<>();
     public static CartManager get() {
-        if (i == null) i = new CartManager();
-        return i;
+        if (manager == null) manager = new CartManager();
+        return manager;
     }
     public void clear() { lines.clear(); }
     public void add(ProductItem item, int qty) {
