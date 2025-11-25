@@ -56,6 +56,11 @@ public class ProductDetailActivity extends AppCompatActivity {
     int parseQty() {
         String t = qty.getText().toString().trim();
         if (TextUtils.isEmpty(t)) return 1;
-        try { int q = Integer.parseInt(t); return Math.max(1, q); } catch (Exception e) { return 1; }
+        try {
+            int q = Integer.parseInt(t);
+            return Math.max(1, q);
+        } catch (Exception e) {
+            return 1;
+        }
     }
 }
