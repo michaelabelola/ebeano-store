@@ -1,5 +1,6 @@
 package com.michael.ebeano;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.michael.ebeano.models.CartLine;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
     public interface Listener { void onChanged(); }
     List<CartLine> data;
     Listener listener;
+    final NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
     public CartAdapter(List<CartLine> data, Listener listener) { this.data = data; this.listener = listener; }
 
     @NonNull
@@ -35,18 +41,50 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         CartLine l = data.get(position);
         Glide.with(h.image.getContext()).load(l.item.imageUrl).into(h.image);
         h.name.setText(l.item.name);
-        h.price.setText(String.format("$%.2f", l.item.price));
+        h.price.setText(currency.format(l.item.price));
         h.qty.setText(String.valueOf(l.qty));
-        h.plus.setOnClickListener(v -> { CartManager.get().update(l.item.id, l.qty + 1); listener.onChanged(); });
-        h.minus.setOnClickListener(v -> { CartManager.get().update(l.item.id, l.qty - 1); listener.onChanged(); });
-        h.remove.setOnClickListener(v -> { CartManager.get().remove(l.item.id); listener.onChanged(); });
+        h.lineTotal.setText(currency.format(l.item.price * l.qty));
+
+        h.plus.setOnClickListener(v -> {
+            CartManager.get().update(l.item.id, l.qty + 1);
+            listener.onChanged();
+        });
+
+        h.minus.setOnClickListener(v -> {
+            if (l.qty <= 1) {
+                showRemoveDialog(v.getContext(), () -> { CartManager.get().remove(l.item.id); listener.onChanged(); });
+            } else {
+                CartManager.get().update(l.item.id, l.qty - 1);
+                listener.onChanged();
+            }
+        });
+
+        h.remove.setOnClickListener(v -> showRemoveDialog(v.getContext(), () -> { CartManager.get().remove(l.item.id); listener.onChanged(); }));
+
         h.qty.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String t = h.qty.getText().toString().trim();
                 if (TextUtils.isEmpty(t)) return;
-                try { int q = Integer.parseInt(t); CartManager.get().update(l.item.id, q); listener.onChanged(); } catch (Exception ignored) {}
+                try {
+                    int q = Integer.parseInt(t);
+                    if (q <= 0) {
+                        showRemoveDialog(v.getContext(), () -> { CartManager.get().remove(l.item.id); listener.onChanged(); });
+                    } else {
+                        CartManager.get().update(l.item.id, q);
+                        listener.onChanged();
+                    }
+                } catch (Exception ignored) {}
             }
         });
+    }
+
+    private void showRemoveDialog(Context c, Runnable onConfirm) {
+        new MaterialAlertDialogBuilder(c)
+                .setTitle(R.string.remove_item)
+                .setMessage(R.string.remove_item_question)
+                .setPositiveButton(R.string.remove, (d, w) -> onConfirm.run())
+                .setNegativeButton(R.string.cancel, (d, w) -> d.dismiss())
+                .show();
     }
 
     @Override
@@ -56,6 +94,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
         ImageView image;
         TextView name;
         TextView price;
+        TextView lineTotal;
         EditText qty;
         Button plus;
         Button minus;
@@ -65,6 +104,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.VH> {
             image = itemView.findViewById(R.id.image);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
+            lineTotal = itemView.findViewById(R.id.line_total);
             qty = itemView.findViewById(R.id.qty);
             plus = itemView.findViewById(R.id.plus);
             minus = itemView.findViewById(R.id.minus);

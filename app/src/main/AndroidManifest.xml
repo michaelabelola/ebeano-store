@@ -13,15 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ebeano">
-        <activity
-            android:name=".ThankYouActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CheckoutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProductDetailActivity"
-            android:exported="false" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="false" />

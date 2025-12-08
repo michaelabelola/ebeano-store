@@ -1,4 +1,29 @@
 <resources>
     <string name="app_name">Ebeano</string>
     <string name="add_to_cart">Add To Cart</string>
+    <string name="explore">Explore</string>
+    <string name="search">Search</string>
+    <string name="cart">Cart</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="tax">Tax</string>
+    <string name="total">Total</string>
+    <string name="checkout">Checkout</string>
+    <string name="cart_empty">Your cart is empty</string>
+    <string name="continue_shopping">Continue shopping</string>
+    <string name="remove_item">Remove item</string>
+    <string name="remove_item_question">Are you sure you want to remove this item from your cart?</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+    <string name="line_total">Line total</string>
+    <!-- Checkout strings -->
+    <string name="order_summary">Order summary</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="address">Address</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry_mm_yy">Expiry MM/YY</string>
+    <string name="cvv">CVV</string>
+    <string name="place_order">Place Order</string>
 </resources>

@@ -74,4 +74,14 @@ public class MainActivity extends AppCompatActivity {
             bottomNav.setSelectedItemId(R.id.nav_explore);
         }
     }
+
+    public void openCartTab() {
+        viewPager.setCurrentItem(2, false);
+        bottomNav.setSelectedItemId(R.id.nav_cart);
+    }
+
+    public void openExploreTab() {
+        viewPager.setCurrentItem(0, false);
+        bottomNav.setSelectedItemId(R.id.nav_explore);
+    }
 }

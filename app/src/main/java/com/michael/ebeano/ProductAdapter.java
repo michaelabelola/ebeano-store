@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.michael.ebeano.models.ProductItem;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.VH> {
     public interface Listener {
@@ -23,6 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.VH> {
 
     List<ProductItem> data;
     Listener listener;
+    final NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
     public ProductAdapter(List<ProductItem> data, Listener listener) {
         this.data = data;
@@ -45,9 +48,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int position) {
         ProductItem p = data.get(position);
         h.name.setText(p.name);
-        h.price.setText(String.format("$%.2f", p.price));
+        h.price.setText(currency.format(p.price));
         h.desc.setText(p.shortDescription);
-        Glide.with(h.image.getContext()).load(p.imageUrl).into(h.image);
+        Glide.with(h.image.getContext())
+                .load(p.imageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(h.image);
         h.itemView.setOnClickListener(v -> listener.onOpen(p));
         h.add.setOnClickListener(v -> listener.onAddToCart(p));
     }

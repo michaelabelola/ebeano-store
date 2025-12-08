@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:orientation="vertical"
@@ -9,41 +11,158 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <EditText
-            android:id="@+id/firstName"
+        <!-- Order summary -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="First Name"/>
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <EditText
-            android:id="@+id/lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last Name"
-            android:layout_marginTop="8dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-        <EditText
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address"
-            android:layout_marginTop="8dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_summary"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="8dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
 
-        <EditText
-            android:id="@+id/phone"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/subtotal"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/summarySubtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tax"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/summaryTax"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/total"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/summaryTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="#000000" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Contact and address info -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:inputType="phone"
-            android:layout_marginTop="8dp"/>
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/first_name"
+            android:layout_marginTop="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/last_name"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/address"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/email"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="#000000"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="@string/phone"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:textColor="#000000"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/payment"
@@ -51,36 +170,81 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
 
-        <EditText
-            android:id="@+id/cardNumber"
+        <!-- Card fields container (shown for Credit/Debit) -->
+        <LinearLayout
+            android:id="@+id/cardFieldsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Card Number"
-            android:inputType="number"
-            android:layout_marginTop="8dp"/>
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
 
-        <EditText
-            android:id="@+id/expiry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Expiry MM/YY"
-            android:inputType="text"
-            android:layout_marginTop="8dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/card_number">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="#000000"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/cvv"
-            android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="@string/expiry_mm_yy">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/expiry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#000000"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/cvv">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cvv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberPassword"
+                        android:textColor="#000000"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressSubmit"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="CVV"
-            android:inputType="numberPassword"
-            android:layout_marginTop="8dp"/>
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_marginTop="12dp"/>
 
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Order"
-            android:layout_marginTop="12dp"/>
+            android:text="@string/place_order"
+            android:layout_marginTop="12dp"
+            android:minHeight="48dp"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"/>
 
     </LinearLayout>
 </ScrollView>
