@@ -29,11 +29,15 @@ AuthenticationService authService = AuthenticationService.instance;
             try {
                 Thread.sleep(2000);
 
+                Intent intent;
                 if (authService.isLoggedIn()) {
-                    this.startActivity(new Intent(this, MainActivity.class));
+                    intent = new Intent(this, MainActivity.class);
                 } else {
-                    this.startActivity(new Intent(this, LoginActivity.class));
+                    intent = new Intent(this, LoginActivity.class);
                 }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                this.startActivity(intent);
+                finish();
             } catch (InterruptedException ignored) {
             }
         }).start();

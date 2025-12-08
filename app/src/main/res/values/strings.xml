@@ -26,4 +26,6 @@
     <string name="expiry_mm_yy">Expiry MM/YY</string>
     <string name="cvv">CVV</string>
     <string name="place_order">Place Order</string>
+    <string name="logout">Logout</string>
+    <string name="product_detail">Product Detail</string>
 </resources>
