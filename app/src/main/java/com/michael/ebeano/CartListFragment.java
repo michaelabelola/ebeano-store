@@ -33,8 +33,7 @@ public class CartListFragment extends Fragment implements CartAdapter.Listener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Reuse the existing activity layout for minimal changes
-        return inflater.inflate(R.layout.activity_cart, container, false);
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
     @Override

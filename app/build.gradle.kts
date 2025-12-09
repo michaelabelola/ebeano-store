@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.glide)
     implementation(libs.firebase.storage)
+    // AndroidX SplashScreen
+    implementation("androidx.core:core-splashscreen:1.0.1")
     // Swipe-to-refresh for Explore page
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     testImplementation(libs.junit)

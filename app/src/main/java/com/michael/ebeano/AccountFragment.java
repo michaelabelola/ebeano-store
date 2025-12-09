@@ -15,7 +15,6 @@ public class AccountFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Simple host with a child container
         return inflater.inflate(R.layout.fragment_host, container, false);
     }
 

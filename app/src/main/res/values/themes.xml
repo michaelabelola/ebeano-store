@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.Ebeano" parent="Base.Theme.Ebeano" />
+
+    <!-- Splash theme for AndroidX SplashScreen -->
+    <style name="Theme.Ebeano.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.Ebeano</item>
+    </style>
 </resources>

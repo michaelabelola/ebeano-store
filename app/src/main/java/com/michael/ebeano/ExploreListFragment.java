@@ -29,8 +29,7 @@ public class ExploreListFragment extends Fragment implements ProductAdapter.List
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Reuse the existing activity layout for product listing
-        return inflater.inflate(R.layout.activity_product, container, false);
+        return inflater.inflate(R.layout.fragment_product, container, false);
     }
 
     @Override

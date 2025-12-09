@@ -44,7 +44,7 @@
     <string name="image_url">Image URL</string>
     <string name="save">Save</string>
     <string name="not_implemented">Not implemented</string>
-    <!-- Add Product / Account -->
+    <!-- Add _Product / Account -->
     <string name="choose_image">Choose Image</string>
     <string name="pick_image">Pick Image</string>
     <string name="uploading_image">Uploading image…</string>

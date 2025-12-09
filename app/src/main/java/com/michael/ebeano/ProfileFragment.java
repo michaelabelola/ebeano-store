@@ -39,9 +39,7 @@ public class ProfileFragment extends Fragment {
         if (toolbar != null) {
             toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material);
             toolbar.setNavigationOnClickListener(v -> {
-                if (getParentFragmentManager() != null) {
-                    getParentFragmentManager().popBackStack();
-                }
+                getParentFragmentManager().popBackStack();
             });
         }
         displayName = view.findViewById(R.id.displayName);

@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-        // Navigate to separate Signup screen
         signup.setOnClickListener(v -> {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);

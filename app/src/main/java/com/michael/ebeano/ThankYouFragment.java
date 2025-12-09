@@ -24,7 +24,6 @@ public class ThankYouFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button back = view.findViewById(R.id.btnBackToProducts);
         back.setOnClickListener(v -> {
-            // Reset Cart host back to cart list
             Fragment parent = getParentFragment();
             if (parent instanceof CartFragment) {
                 ((CartFragment) parent).resetToCart();

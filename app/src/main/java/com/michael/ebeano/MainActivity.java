@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Handle deep-link like navigation from ProductDetailActivity to open Cart tab
         boolean openCart = getIntent().getBooleanExtra("open_cart", false);
         if (openCart) {
             viewPager.setCurrentItem(2, false);

@@ -34,7 +34,6 @@ public class ExploreFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.explore));
-            // Ensure no actions (e.g., Logout) are shown on Explore/Product Detail
             toolbar.getMenu().clear();
         }
 
