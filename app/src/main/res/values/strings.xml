@@ -29,6 +29,25 @@
     <string name="logout">Logout</string>
     <string name="product_detail">Product Detail</string>
     
+    <!-- Account -->
+    <string name="account">Account</string>
+    <string name="profile">Profile</string>
+    <string name="add_product">Add Product</string>
+    <string name="name">Name</string>
+    <string name="short_description">Short Description</string>
+    <string name="long_description">Long Description</string>
+    <string name="price_label">Price</string>
+    <string name="image_url">Image URL</string>
+    <string name="save">Save</string>
+    <string name="not_implemented">Not implemented</string>
+    <!-- Add Product / Account -->
+    <string name="choose_image">Choose Image</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="uploading_image">Uploading image…</string>
+    <string name="saving">Saving…</string>
+    <string name="image_required">Image is required</string>
+    <string name="product_added">Product added</string>
+    
     <!-- Auth / Signup -->
     <string name="signup">Sign Up</string>
     <string name="create_account">Create Account</string>

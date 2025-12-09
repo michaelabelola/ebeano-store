@@ -20,13 +20,16 @@ public class MainPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new SearchFragment();
             case 2:
-            default:
                 return new CartFragment();
+            case 3:
+                return new AccountFragment();
+            default:
+                return new ExploreFragment();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

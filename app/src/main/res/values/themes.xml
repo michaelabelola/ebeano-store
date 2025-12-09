@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Ebeano" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-<!--         <item name="colorPrimary">@color/my_light_primary</item>-->
+        <item name="colorPrimary">@color/black</item>
     </style>
 
     <style name="Theme.Ebeano" parent="Base.Theme.Ebeano" />

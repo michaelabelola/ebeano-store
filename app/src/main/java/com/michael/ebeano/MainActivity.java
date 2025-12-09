@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_cart) {
                 viewPager.setCurrentItem(2, false);
                 return true;
+            } else if (item.getItemId() == R.id.nav_account) {
+                viewPager.setCurrentItem(3, false);
+                return true;
             }
             return false;
         });
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         bottomNav.setSelectedItemId(R.id.nav_cart);
+                        break;
+                    case 3:
+                        bottomNav.setSelectedItemId(R.id.nav_account);
                         break;
                 }
             }
@@ -83,5 +89,10 @@ public class MainActivity extends AppCompatActivity {
     public void openExploreTab() {
         viewPager.setCurrentItem(0, false);
         bottomNav.setSelectedItemId(R.id.nav_explore);
+    }
+
+    public void openAccountTab() {
+        viewPager.setCurrentItem(3, false);
+        bottomNav.setSelectedItemId(R.id.nav_account);
     }
 }

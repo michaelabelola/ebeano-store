@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.viewpager2)
     implementation(libs.cardview)
     implementation(libs.glide)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
