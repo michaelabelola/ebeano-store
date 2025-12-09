@@ -34,9 +34,8 @@ public class ExploreFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.explore));
+            // Ensure no actions (e.g., Logout) are shown on Explore/Product Detail
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_explore);
-            toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
         }
 
         if (savedInstanceState == null) {
@@ -65,18 +64,7 @@ public class ExploreFragment extends Fragment {
         syncToolbar();
     }
 
-    private boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.action_logout) {
-            // Sign out and go to Login, clearing task so Splash is not shown on back
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(requireContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            requireActivity().finish();
-            return true;
-        }
-        return false;
-    }
+    // No toolbar menu actions on Explore/Product Detail
 
     private void syncToolbar() {
         if (toolbar == null) return;
