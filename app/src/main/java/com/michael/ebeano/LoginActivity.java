@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         FirebaseUser current = auth.getCurrentUser();
         if (current != null) goToProducts();
-        View.OnClickListener handler = v -> {
+        login.setOnClickListener(v -> {
             String e = email.getText().toString().trim();
             String p = password.getText().toString();
             if (!Patterns.EMAIL_ADDRESS.matcher(e).matches()) {
@@ -47,20 +47,17 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             progress.setVisibility(View.VISIBLE);
-            if (v.getId() == R.id.btnSignup) {
-                auth.createUserWithEmailAndPassword(e, p).addOnCompleteListener(task -> {
-                    progress.setVisibility(View.GONE);
-                    if (task.isSuccessful()) goToProducts(); else Toast.makeText(this, "Signup failed", Toast.LENGTH_SHORT).show();
-                });
-            } else {
-                auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(task -> {
-                    progress.setVisibility(View.GONE);
-                    if (task.isSuccessful()) goToProducts(); else Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
-                });
-            }
-        };
-        login.setOnClickListener(handler);
-        signup.setOnClickListener(handler);
+            auth.signInWithEmailAndPassword(e, p).addOnCompleteListener(task -> {
+                progress.setVisibility(View.GONE);
+                if (task.isSuccessful()) goToProducts(); else Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+            });
+        });
+
+        // Navigate to separate Signup screen
+        signup.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SignupActivity.class);
+            startActivity(intent);
+        });
     }
 
     void goToProducts() {
