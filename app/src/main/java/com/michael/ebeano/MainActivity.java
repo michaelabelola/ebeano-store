@@ -37,14 +37,11 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_explore) {
                 viewPager.setCurrentItem(0, false);
                 return true;
-            } else if (item.getItemId() == R.id.nav_search) {
+            } else if (item.getItemId() == R.id.nav_cart) {
                 viewPager.setCurrentItem(1, false);
                 return true;
-            } else if (item.getItemId() == R.id.nav_cart) {
-                viewPager.setCurrentItem(2, false);
-                return true;
             } else if (item.getItemId() == R.id.nav_account) {
-                viewPager.setCurrentItem(3, false);
+                viewPager.setCurrentItem(2, false);
                 return true;
             }
             return false;
@@ -58,12 +55,9 @@ public class MainActivity extends AppCompatActivity {
                         bottomNav.setSelectedItemId(R.id.nav_explore);
                         break;
                     case 1:
-                        bottomNav.setSelectedItemId(R.id.nav_search);
-                        break;
-                    case 2:
                         bottomNav.setSelectedItemId(R.id.nav_cart);
                         break;
-                    case 3:
+                    case 2:
                         bottomNav.setSelectedItemId(R.id.nav_account);
                         break;
                 }

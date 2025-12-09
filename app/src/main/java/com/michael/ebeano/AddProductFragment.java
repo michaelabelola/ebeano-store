@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,10 +82,10 @@ public class AddProductFragment extends Fragment {
             intent.setType("image/*");
             imagePicker.launch(Intent.createChooser(intent, getString(R.string.pick_image)));
         });
-        save.setOnClickListener(v -> doSave());
+        save.setOnClickListener(v -> saveProduct());
     }
 
-    void doSave() {
+    void saveProduct() {
         String n = textOf(name);
         String sd = textOf(shortDesc);
         String ld = textOf(longDesc);
@@ -105,6 +106,7 @@ public class AddProductFragment extends Fragment {
                 .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
                     saveProduct(n, sd, ld, p, uri != null ? uri.toString() : "");
                 }).addOnFailureListener(e -> {
+                    Log.e(this.getClass().getName(), "***************************:::: "+ e.getLocalizedMessage() );
                     setLoading(false);
                     Toast.makeText(requireContext(), getString(R.string.uploading_image) + " failed", Toast.LENGTH_SHORT).show();
                 }))

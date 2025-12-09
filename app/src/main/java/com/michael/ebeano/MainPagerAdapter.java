@@ -14,18 +14,11 @@ public class MainPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new ExploreFragment();
-            case 1:
-                return new SearchFragment();
-            case 2:
-                return new CartFragment();
-            case 3:
-                return new AccountFragment();
-            default:
-                return new ExploreFragment();
-        }
+        return switch (position) {
+            case 1 -> new CartFragment();
+            case 2 -> new AccountFragment();
+            default -> new ExploreFragment();
+        };
     }
 
     @Override
