@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.michael.ebeano.models.ProductItem;
 import com.michael.ebeano.services.ProductService;
@@ -21,6 +22,7 @@ public class ExploreListFragment extends Fragment implements ProductAdapter.List
 
     RecyclerView list;
     ProgressBar progress;
+    SwipeRefreshLayout swipeRefresh;
     ProductAdapter adapter;
     ProductService service;
 
@@ -36,26 +38,36 @@ public class ExploreListFragment extends Fragment implements ProductAdapter.List
         super.onViewCreated(view, savedInstanceState);
         list = view.findViewById(R.id.recycler);
         progress = view.findViewById(R.id.progress);
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
         int orientation = getResources().getConfiguration().orientation;
         int span = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
         list.setLayoutManager(new GridLayoutManager(requireContext(), span));
         adapter = new ProductAdapter(new ArrayList<>(), this);
         list.setAdapter(adapter);
         service = new ProductService();
-        load();
+        if (swipeRefresh != null) {
+            swipeRefresh.setColorSchemeColors(0xFF000000); // black
+            swipeRefresh.setOnRefreshListener(() -> load(true));
+        }
+        load(false);
     }
 
-    void load() {
-        progress.setVisibility(View.VISIBLE);
+    void load() { load(false); }
+
+    void load(boolean fromSwipe) {
+        if (!fromSwipe && progress != null) progress.setVisibility(View.VISIBLE);
+        if (fromSwipe && swipeRefresh != null && !swipeRefresh.isRefreshing()) swipeRefresh.setRefreshing(true);
         service.list(items -> {
             if (items.isEmpty()) {
                 service.seedDefault(created -> {
                     adapter.setData(created);
-                    progress.setVisibility(View.GONE);
+                    if (progress != null) progress.setVisibility(View.GONE);
+                    if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
                 });
             } else {
                 adapter.setData(items);
-                progress.setVisibility(View.GONE);
+                if (progress != null) progress.setVisibility(View.GONE);
+                if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
             }
         });
     }

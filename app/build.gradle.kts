@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.glide)
     implementation(libs.firebase.storage)
+    // Swipe-to-refresh for Explore page
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
