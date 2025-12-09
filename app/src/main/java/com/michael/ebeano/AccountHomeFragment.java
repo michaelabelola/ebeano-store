@@ -21,10 +21,13 @@ import com.michael.ebeano.models.UserDoc;
 
 public class AccountHomeFragment extends Fragment {
 
-    TextView userName;
-    Button btnProfile;
+    TextView displayName;
+    TextView email;
+    TextView phone;
+    TextView avatarInitials;
     Button btnAddProduct;
     MaterialToolbar toolbar;
+    View progressProfile;
 
     @Nullable
     @Override
@@ -41,16 +44,14 @@ public class AccountHomeFragment extends Fragment {
             toolbar.inflateMenu(R.menu.menu_account);
             toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
         }
-        userName = view.findViewById(R.id.userName);
-        btnProfile = view.findViewById(R.id.btnProfile);
-        btnAddProduct = view.findViewById(R.id.btnAddProduct);
+        // Profile header views (moved from ProfileFragment)
+        avatarInitials = view.findViewById(R.id.avatarInitials);
+        displayName = view.findViewById(R.id.displayName);
+        email = view.findViewById(R.id.email);
+        phone = view.findViewById(R.id.phone);
+        progressProfile = view.findViewById(R.id.progressProfile);
 
-        btnProfile.setOnClickListener(v -> {
-            Fragment parent = getParentFragment();
-            if (parent instanceof AccountFragment) {
-                ((AccountFragment) parent).openProfile();
-            }
-        });
+        btnAddProduct = view.findViewById(R.id.btnAddProduct);
 
         btnAddProduct.setOnClickListener(v -> {
             Fragment parent = getParentFragment();
@@ -59,7 +60,9 @@ public class AccountHomeFragment extends Fragment {
             }
         });
 
-        loadName();
+        // Setup fallbacks and load user profile into header
+        setupProfileFallbacks();
+        loadUser();
     }
 
     private boolean onMenuItemClick(MenuItem item) {
@@ -74,33 +77,79 @@ public class AccountHomeFragment extends Fragment {
         return false;
     }
 
-    void loadName() {
-        String fallback = null;
+    void setupProfileFallbacks() {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            fallback = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            String em = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            if (email != null && em != null) email.setText(em);
+            if (displayName != null) displayName.setText(displayFromEmail(em));
+            if (avatarInitials != null) avatarInitials.setText(initialsFrom(displayName != null ? displayName.getText().toString() : em));
         }
-        if (fallback != null && userName != null) {
-            userName.setText(fallback);
-        }
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseFirestore.getInstance().collection("users").document(uid).get()
-                .addOnSuccessListener(this::bindUser)
-                .addOnFailureListener(e -> { /* keep fallback */ });
     }
 
-    void bindUser(DocumentSnapshot snap) {
-        if (userName == null) return;
-        if (snap != null && snap.exists()) {
-            UserDoc doc = snap.toObject(UserDoc.class);
-            if (doc != null) {
-                String name = (doc.firstName != null ? doc.firstName : "").trim() +
-                        " " + (doc.lastName != null ? doc.lastName : "").trim();
-                name = name.trim();
-                if (!name.isEmpty()) {
-                    userName.setText(name);
-                }
+    void loadUser() {
+        if (progressProfile != null) progressProfile.setVisibility(View.VISIBLE);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            if (progressProfile != null) progressProfile.setVisibility(View.GONE);
+            return;
+        }
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("users").document(uid).get()
+                .addOnSuccessListener(this::bind)
+                .addOnFailureListener(e -> bind(null));
+    }
+
+    void bind(@Nullable DocumentSnapshot snap) {
+        if (progressProfile != null) progressProfile.setVisibility(View.GONE);
+        UserDoc doc = null;
+        if (snap != null && snap.exists()) doc = snap.toObject(UserDoc.class);
+        String em = null;
+        if (doc != null) em = nullToEmpty(doc.email);
+        if (em == null && FirebaseAuth.getInstance().getCurrentUser() != null) {
+            em = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        }
+
+        String name = doc != null ? (nullToEmpty(doc.firstName) + " " + nullToEmpty(doc.lastName)).trim() : null;
+        if (name == null || name.isEmpty()) name = displayFromEmail(em);
+
+        if (displayName != null) displayName.setText(name);
+        if (email != null) email.setText(em != null ? em : "");
+
+        String ph = doc != null ? nullToEmpty(doc.phone) : "";
+        if (ph.isEmpty()) {
+            if (phone != null) phone.setVisibility(View.GONE);
+        } else {
+            if (phone != null) {
+                phone.setVisibility(View.VISIBLE);
+                phone.setText(formatPhone(ph));
             }
         }
+
+        if (avatarInitials != null) avatarInitials.setText(initialsFrom(name != null ? name : em));
+    }
+
+    static String nullToEmpty(String s) { return s == null ? "" : s; }
+    static String displayFromEmail(@Nullable String email) {
+        if (email == null) return "";
+        int at = email.indexOf('@');
+        if (at > 0) return email.substring(0, at);
+        return email;
+    }
+    static String initialsFrom(@Nullable String source) {
+        if (source == null || source.trim().isEmpty()) return "?";
+        String[] parts = source.trim().split("\\s+");
+        if (parts.length >= 2) {
+            char a = Character.toUpperCase(parts[0].charAt(0));
+            char b = Character.toUpperCase(parts[1].charAt(0));
+            return new String(new char[]{a, b});
+        }
+        char a = Character.toUpperCase(parts[0].charAt(0));
+        return String.valueOf(a);
+    }
+    static String formatPhone(@NonNull String input) {
+        String digits = input.replaceAll("[^0-9]", "");
+        if (digits.length() == 10) {
+            return String.format("(%s) %s-%s", digits.substring(0,3), digits.substring(3,6), digits.substring(6));
+        }
+        return input;
     }
 }

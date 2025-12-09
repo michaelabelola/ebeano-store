@@ -42,14 +42,6 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    public void openProfile() {
-        getChildFragmentManager()
-                .beginTransaction()
-                .replace(R.id.child_container, new ProfileFragment(), "profile")
-                .addToBackStack("profile")
-                .commit();
-    }
-
     public void openAddProduct() {
         getChildFragmentManager()
                 .beginTransaction()
