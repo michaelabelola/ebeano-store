@@ -25,6 +25,7 @@
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:contentDescription="@string/product_image"
                 android:scaleType="centerCrop"
                 tools:src="@tools:sample/backgrounds/scenic"/>
         </com.google.android.material.card.MaterialCardView>
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
+            app:cardElevation="1dp"
             app:layout_constraintTop_toBottomOf="@id/imageCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -62,6 +63,14 @@
                     tools:text="$99.99"/>
 
                 <TextView
+                    android:id="@+id/shortDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    tools:text="Short description"/>
+
+                <TextView
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
+            app:cardElevation="1dp"
             app:layout_constraintTop_toBottomOf="@id/detailsCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -87,15 +96,27 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMinus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minus"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:contentDescription="@string/decrease_quantity"
+                    app:layout_constraintTop_toTopOf="@+id/qtyLayout"
+                    app:layout_constraintBottom_toBottomOf="@+id/qtyLayout"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/qtyLayout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:hint="Qty">
+                    app:layout_constraintStart_toEndOf="@+id/btnMinus"
+                    app:layout_constraintEnd_toStartOf="@id/btnPlus"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/qty">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/qty"
@@ -105,16 +126,40 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlus"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/increase_quantity"
+                    android:text="@string/plus"
+                    app:layout_constraintBottom_toBottomOf="@+id/qtyLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/qtyLayout"
+                    app:layout_constraintTop_toTopOf="@+id/qtyLayout" />
+
+                <TextView
+                    android:id="@+id/subtotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    tools:text="Subtotal: $19.98"
+                    app:layout_constraintTop_toBottomOf="@+id/qtyLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAdd"
+                    app:layout_constraintHorizontal_bias="0"/>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add to Cart"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/add_to_cart"
                     app:icon="@drawable/baseline_add_shopping_cart_24"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/subtotal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 

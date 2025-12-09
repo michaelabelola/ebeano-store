@@ -28,6 +28,10 @@
     <string name="place_order">Place Order</string>
     <string name="logout">Logout</string>
     <string name="product_detail">Product Detail</string>
+    <string name="no_description">No description available.</string>
+    <string name="product_image">Product image</string>
+    <string name="added_to_cart">Added to cart</string>
+    <string name="subtotal_fmt">Subtotal: %1$s</string>
     
     <!-- Account -->
     <string name="account">Account</string>
@@ -62,4 +66,9 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Log In</string>
+    <string name="increase_quantity">Increase quantity</string>
+    <string name="plus">+</string>
+    <string name="decrease_quantity">Decrease quantity</string>
+    <string name="minus">−</string>
+    <string name="qty">Qty</string>
 </resources>
